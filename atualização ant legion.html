@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐜 Calculadora de Formigas (CALIBRADA FINAL) 🐜</title>
+    <title>🐜 Calculadora de PC by:ঔৣ平Ƭнυяя和ヅ 159🐜</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +21,7 @@
             border: 2px solid #FF0000; /* Borda vermelha para o container principal */
         }
         h1 {
-            color: #FFD700; /* Amarelo dourado para o título principal */
+            color: #FF0000; /* vermei para o título principal */
             text-align: center;
         }
         h2 {
@@ -146,7 +146,7 @@
 <body>
 
 <div class="container">
-    <h1>🐜 Calculadora de Formigas (CALIBRADA FINAL) 🐜</h1>
+    <h1>🐜Calculadora de PC by:ঔৣ平Ƭнυяя和ヅ 159🐜</h1>
     
     <div class="tier-select-container">
         <label for="tierSelect">Selecione o Tipo de Formiga (Tier):</label>
@@ -214,8 +214,7 @@
         <label for="bonusMochila">Bônus da Mochila (Redução de Tempo):</label>
         <select id="bonusMochila" onchange="calcularTudo()">
             <option value="0" selected>Nenhum (0%)</option>
-            <option value="0.019843">10% exibido (Real: 1.98%)</option> 
-            <option value="0.039686">20% exibido (Real: 3.97%)</option>
+            <option value="0.019843">10% exibido (Real: 1.98%)</option>
             <option value="0.0595292">30% exibido (Real: 5.95%)</option>
             <option value="0.0992153">50% exibido (Real: 9.92%)</option>
         </select>
@@ -263,48 +262,48 @@
 
 <script>
     // --- FATORES DE REDUÇÃO CALIBRADOS ---
-    const REDUC_TUDO_EM_TREINAMENTO = 0.03597; 
-    const REDUC_RECUPERACAO_POS_GUERRA = 0.37312; 
-    const MULT_PC_RECUPERACAO = 1.20; 
+    const REDUC_TUDO_EM_TREINAMENTO = 0.03597;
+    const REDUC_RECUPERACAO_POS_GUERRA = 0.37312;
+    const MULT_PC_RECUPERACAO = 1.20;
 
     // --- CONSTANTES DE CONFIGURAÇÃO DE TIERS ---
     const TIER_CONFIG = {
         'T10': {
-            PC: 60, 
+            PC: 60,
             custos: {
-                comida: 421.7721, 
-                folha: 223.7975, 
-                agua: 34.3800, 
+                comida: 421.7721,
+                folha: 223.7975,
+                agua: 34.3800,
                 fungo: 5.5696
             },
-            TIME_MULT: 0.8353 
+            TIME_MULT: 0.8353
         },
         'T11': {
             PC: 80,
             custos: {
-                comida: 597.4683, 
-                folha: 245.0632, 
-                agua: 59.7468, 
+                comida: 597.4683,
+                folha: 245.0632,
+                agua: 59.7468,
                 fungo: 11.1898
             },
-            TIME_MULT: 1.0 
+            TIME_MULT: 1.0
         },
         'T12': {
             PC: 100,
             custos: {
-                comida: 774.6835, 
-                folha: 265.8227, 
-                agua: 85.5696, 
+                comida: 774.6835,
+                folha: 265.8227,
+                agua: 85.5696,
                 fungo: 16.7569
             },
-            TIME_MULT: 1.24230 
+            TIME_MULT: 1.24230
         },
         'T13': {
-            PC: 125, 
+            PC: 125,
             custos: {
-                comida: 979.7979, 
-                folha: 319.6969, 
-                agua: 119.6969, 
+                comida: 979.7979,
+                folha: 319.6969,
+                agua: 119.6969,
                 fungo: 28.0000
             },
             TIME_MULT: 3.5213
@@ -331,7 +330,7 @@
         if (days > 0) output += `${days}d `;
         if (hours > 0) output += `${hours}h `;
         if (minutes > 0) output += `${minutes}m `;
-        if (seconds > 0 || output === '') output += `${seconds}s`; 
+        if (seconds > 0 || output === '') output += `${seconds}s`;
         
         return output.trim();
     }
@@ -354,7 +353,7 @@
     
     function getPCPerAnt() {
         const tierConfig = getCurrentTierConfig();
-        return tierConfig ? tierConfig.PC : 0; 
+        return tierConfig ? tierConfig.PC : 0;
     }
 
     function getCostsPerAnt() {
@@ -366,13 +365,13 @@
         let multiplicadorTempo = 1.0;
 
         if (isTreinamentoActive) {
-            multiplicadorTempo *= (1 - REDUC_TUDO_EM_TREINAMENTO); 
+            multiplicadorTempo *= (1 - REDUC_TUDO_EM_TREINAMENTO);
         }
         if (isRecuperacaoActive) {
-            multiplicadorTempo *= (1 - REDUC_RECUPERACAO_POS_GUERRA); 
+            multiplicadorTempo *= (1 - REDUC_RECUPERACAO_POS_GUERRA);
         }
         if (descontoMochila > 0) {
-            multiplicadorTempo *= (1 - descontoMochila); 
+            multiplicadorTempo *= (1 - descontoMochila);
         }
 
         return multiplicadorTempo;
@@ -395,29 +394,29 @@
             tempoBaseMinutos *= getTempoMultiplicador(isTreinamentoActive, isRecuperacaoActive, descontoMochila);
         }
 
-        return Math.max(tempoBaseMinutos, 0.0001); 
+        return Math.max(tempoBaseMinutos, 0.0001);
     }
 
 
     function getTrainingRate() {
-        const Q1 = parseInt(document.getElementById('quantidadeFormiga').value);
-        if (isNaN(Q1) || Q1 <= 0) return 0;
+        const Q1 = parseFloat(document.getElementById('quantidadeFormiga').value) || 0; // Use parseFloat e default 0
+        if (Q1 <= 0) return 0;
         
         const T_minutos_ajustado = obterTempoTotalEmMinutos(true);
         
-        return Q1 / T_minutos_ajustado; 
+        return Q1 / T_minutos_ajustado;
     }
 
     // --- FUNÇÃO DE ENGENHARIA REVERSA (SEÇÃO 0) ---
     
     function reverterTempo() {
-        const tier = document.getElementById('tierSelect').value; 
+        const tier = document.getElementById('tierSelect').value;
         const resultadoDiv = document.getElementById('resultadoReversa');
         
         if (!tier) {
-             resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
-             limparTransferencia(); 
-             return;
+            resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
+            limparTransferencia();
+            return;
         }
 
         const Q = parseFloat(document.getElementById('quantidadeFormigaReversa').value) || 0;
@@ -430,7 +429,7 @@
         // 2. Validação de Inputs da Reversa
         if (Q <= 0 || (diasFinal + horasFinal + minutosFinal + segundosFinal) <= 0) {
             resultadoDiv.innerHTML = `<p style='color: red;'>Insira uma quantidade de formigas e um tempo final válidos (${tier}).</p>`;
-            limparTransferencia(); 
+            limparTransferencia();
             return;
         }
 
@@ -443,9 +442,9 @@
         const multiplicadorTotal = getTempoMultiplicador(isTreinamentoActive, isRecuperacaoActive, descontoMochila);
         
         if (multiplicadorTotal === 0) {
-             resultadoDiv.innerHTML = `<p style='color: red;'>Erro: Multiplicador de tempo é zero. Verifique as configurações de bônus.</p>`;
-             limparTransferencia(); 
-             return;
+            resultadoDiv.innerHTML = `<p style='color: red;'>Erro: Multiplicador de tempo é zero. Verifique as configurações de bônus.</p>`;
+            limparTransferencia();
+            return;
         }
 
         const tempoBaseMinutos = tempoFinalMinutos / multiplicadorTotal;
@@ -464,14 +463,13 @@
             <p style="color: blue;">*Tempo Base de ${tier} transferido automaticamente para a Seção 1.*</p>
         `;
         
-        // Recálculo após transferência bem-sucedida
-        calcularPorQuantidade();
-        calcularPorPC();
+        // CORREÇÃO: Chama calcularTudo() para forçar o recálculo das Seções 1 e 2.
+        calcularTudo();
     }
     
     function limparTransferencia() {
         // Limpa apenas a quantidade e o Tempo Base da Seção 1, mas não o Tempo Final da Seção 0
-        document.getElementById('quantidadeFormiga').value = ''; 
+        document.getElementById('quantidadeFormiga').value = 0; // CORRIGIDO: de '' para 0
         document.getElementById('tempoDias').value = 0;
         document.getElementById('tempoHoras').value = 0;
         document.getElementById('tempoMinutos').value = 0;
@@ -504,13 +502,13 @@
         const tierConfig = TIER_CONFIG[tier];
         
         if (!tierConfig) {
-             document.getElementById('pcBaseDisplay').innerHTML = "Selecione um Tier para ver o PC base.";
-             document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO`;
-             document.getElementById('tituloSecao1').innerHTML = `➡️ 1. Calcule a Taxa de Produção e o Tempo Ajustado (TIER)`;
-             document.getElementById('reversaTierDisplay1').textContent = 'TIER';
-             document.getElementById('reversaTierDisplay2').textContent = 'TIER';
-             document.getElementById('quantidadeTierDisplay').textContent = 'TIER';
-             return;
+            document.getElementById('pcBaseDisplay').innerHTML = "Selecione um Tier para ver o PC base.";
+            document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO`;
+            document.getElementById('tituloSecao1').innerHTML = `➡️ 1. Calcule a Taxa de Produção e o Tempo Ajustado (TIER)`;
+            document.getElementById('reversaTierDisplay1').textContent = 'TIER';
+            document.getElementById('reversaTierDisplay2').textContent = 'TIER';
+            document.getElementById('quantidadeTierDisplay').textContent = 'TIER';
+            return;
         }
         
         let pcBase = tierConfig.PC;
@@ -519,9 +517,9 @@
         const isRecuperacaoActive = document.getElementById('bonusRecuperacao').checked;
 
         if (tier === 'T11' && isRecuperacaoActive) {
-             pcDisplayText = `PC Base por Formiga ${tier}: **${pcBase} PC** (Recuperação Pós-Guerra **NÃO** afeta o PC da T11).`;
+            pcDisplayText = `PC Base por Formiga ${tier}: **${pcBase} PC** (Recuperação Pós-Guerra **NÃO** afeta o PC da T11).`;
         } else {
-             pcDisplayText = `PC Base por Formiga ${tier}: **${pcBase} PC**.`;
+            pcDisplayText = `PC Base por Formiga ${tier}: **${pcBase} PC**.`;
         }
         document.getElementById('pcBaseDisplay').innerHTML = pcDisplayText;
 
@@ -535,23 +533,32 @@
 
     function calcularPorQuantidade() {
         const tier = document.getElementById('tierSelect').value;
-        const Q = parseFloat(document.getElementById('quantidadeFormiga').value);
-        const T_minutos_ajustado = obterTempoTotalEmMinutos(true);
-        const pcPorFormiga = getPCPerAnt(); 
-        const pcTotal = Q * pcPorFormiga;
+        const Q = parseFloat(document.getElementById('quantidadeFormiga').value) || 0; // Garante que Q é um número
+        const pcPorFormiga = getPCPerAnt();
         const resultadoDiv = document.getElementById('resultadoQuantidade');
         
         if (!tier) {
-             resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
-             return;
+            resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
+            return;
+        }
+
+        // CORRIGIDO: Validação do tempo base (sem ajuste) para garantir que o usuário inseriu um tempo.
+        const tempoBaseMinutos = convertDHMS_to_Minutes(
+            parseFloat(document.getElementById('tempoDias').value) || 0,
+            parseFloat(document.getElementById('tempoHoras').value) || 0,
+            parseFloat(document.getElementById('tempoMinutos').value) || 0,
+            parseFloat(document.getElementById('tempoSegundos').value) || 0
+        );
+        
+        // Verifica se a quantidade E o tempo base foram inseridos
+        if (Q <= 0 || tempoBaseMinutos <= 0) {
+            resultadoDiv.innerHTML = "<p style='color: red;'>Insira a quantidade de formigas e o tempo base.</p>";
+            return;
         }
         
-        // Verifica se a quantidade E o tempo foram inseridos
-        if (isNaN(Q) || Q <= 0 || T_minutos_ajustado <= 0.0001) {
-             resultadoDiv.innerHTML = "<p style='color: red;'>Insira a quantidade de formigas e o tempo base.</p>";
-             return;
-        }
-        
+        // O restante do cálculo usa o tempo ajustado (com bônus)
+        const T_minutos_ajustado = obterTempoTotalEmMinutos(true);
+        const pcTotal = Q * pcPorFormiga;
 
         resultadoDiv.innerHTML = `
             <h3>Resultados de Treinamento (${formatar(Q)} Formigas ${tier}):</h3>
@@ -564,13 +571,13 @@
         const tier = document.getElementById('tierSelect').value;
         const pcAlvo = parseFloat(document.getElementById('pcAlvo').value);
         let rate_ants_per_minute_final = getTrainingRate();
-        const pcPorFormiga = getPCPerAnt(); 
+        const pcPorFormiga = getPCPerAnt();
         const custos = getCostsPerAnt();
         const resultadoDiv = document.getElementById('resultadoPC');
         
         if (!tier) {
-             resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
-             return;
+            resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
+            return;
         }
 
         if (isNaN(pcAlvo) || pcAlvo <= 0) {
@@ -579,18 +586,18 @@
         }
         
         if (pcPorFormiga <= 0) {
-             resultadoDiv.innerHTML = `<p style='color: red;'>Erro: PC por formiga inválido. Verifique o Tier selecionado.</p>`;
-             return;
+            resultadoDiv.innerHTML = `<p style='color: red;'>Erro: PC por formiga inválido. Verifique o Tier selecionado.</p>`;
+            return;
         }
         
         if (rate_ants_per_minute_final <= 0) {
-             resultadoDiv.innerHTML = `<p style='color: red;'>Erro: Taxa de produção inválida. Complete a Seção 1 (Quantidade e Tempo Base).</p>`;
-             return;
+            resultadoDiv.innerHTML = `<p style='color: red;'>Erro: Taxa de produção inválida. Complete a Seção 1 (Quantidade e Tempo Base).</p>`;
+            return;
         }
 
 
         const formigasNecessarias = pcAlvo / pcPorFormiga;
-        const formigasInteiras = Math.ceil(formigasNecessarias); 
+        const formigasInteiras = Math.ceil(formigasNecessarias);
         const pcReal = formigasInteiras * pcPorFormiga;
 
         const tempoTotalEmMinutos = formigasInteiras / rate_ants_per_minute_final;
@@ -618,7 +625,7 @@
 
     // Função única para recalcular tudo
     function calcularTudo() {
-        updateTierDisplay(); 
+        updateTierDisplay();
         // NOTA: reverterTempo() NÃO é mais chamada aqui. Ela é chamada APENAS quando há input na Seção 0.
         // Isso permite que a Seção 1 seja preenchida manualmente.
         calcularPorQuantidade();
@@ -627,12 +634,11 @@
 
     // Função inicial que garante o estado limpo e inicial da calculadora
     window.onload = function() {
-        updateTierDisplay();
-        
-        // Limpa campos de input numéricos
-        document.querySelectorAll('input[type="number"]').forEach(input => input.value = '');
-        
-        // Define 0 nos campos de tempo (para evitar NaN no JS, embora o value='' funcione bem)
+        // CORRIGIDO: Garante que os campos de quantidade/PC inicial estejam vazios, e os de tempo estejam zerados.
+        document.getElementById('quantidadeFormigaReversa').value = '';
+        document.getElementById('quantidadeFormiga').value = '';
+        document.getElementById('pcAlvo').value = '';
+
         document.getElementById('tempoDias').value = 0;
         document.getElementById('tempoHoras').value = 0;
         document.getElementById('tempoMinutos').value = 0;
@@ -646,6 +652,9 @@
         document.getElementById('resultadoReversa').innerHTML = `<p>coloque o tempo que aparece com o pós guerra e tudo em treinamento</p>`;
         document.getElementById('resultadoQuantidade').innerHTML = `<p>Insira os valores acima para calcular.</p>`;
         document.getElementById('resultadoPC').innerHTML = `<p>Insira o valor do PC desejado para calcular.</p>`;
+        
+        // Inicializa o display do Tier
+        updateTierDisplay();
     }
 </script>
 
