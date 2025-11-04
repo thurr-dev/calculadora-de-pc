@@ -159,11 +159,11 @@
 
 <div class="container">
     <h1>🐜Calculadora de PC by:ঔৣ平Ƭнυяя和ヅ 159🐜</h1>
-	<p class="subtitle-melee">MELEE</p> 
+	<p class="subtitle-melee">MELEE</p>	
 	<div class="tier-select-container">
 	
-    
-    
+	
+	
     <div class="tier-select-container">
         <label for="tierSelect">Selecione o Tipo de Formiga (Tier):</label>
         <select id="tierSelect" onchange="calcularTudo()">
@@ -174,14 +174,14 @@
             <option value="T13">T13</option>
         </select>
     </div>
-    
+	
     <p id="pcBaseDisplay">Selecione um Tier para ver o PC base.</p>
-    
+	
     <hr>
-    
+	
     <h2 id="tituloSecao0">↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO</h2>
     <p>Insira o tempo final do jogo. O **Tempo Base** calculado será **automaticamente transferido** para a Seção 1 abaixo.</p>
-    
+	
     <label for="quantidadeFormigaReversa">Quantidade de Formigas Treinadas (<span id="reversaTierDisplay1">TIER</span>):</label>
     <input type="number" id="quantidadeFormigaReversa" value="" min="1" oninput="reverterTempo()">
 
@@ -204,7 +204,7 @@
             <small>Segundos</small>
         </div>
     </div>
-    
+	
     <div id="resultadoReversa" class="resultado-reversa">
         <p>coloque o tempo que aparece com o pós guerra e tudo em treinamento</p>
     </div>
@@ -216,12 +216,12 @@
 
     <div class="bonus-section">
         <h3>Bônus Ativos (Para Cálculo do Tempo Ajustado)</h3>
-        
+		
         <label>
             <input type="checkbox" id="bonusTreinamento" onchange="calcularTudo()">
             **Tudo em Treinamento**<span class="hidden-calib"><small class="tempo">(Redução Real Recalibrada: $\mathbf{\approx 3.60\%}$)</small></span>
         </label>
-        
+		
         <label>
             <input type="checkbox" id="bonusRecuperacao" onchange="calcularTudo()">
             **Recuperação Pós-Guerra**<span class="hidden-calib"><small class="tempo">(Redução Real Calibrada: $\mathbf{\approx 37.31\%}$)</small></span>
@@ -258,7 +258,7 @@
             <small>Segundos</small>
         </div>
     </div>
-    
+	
     <div id="resultadoQuantidade" class="resultado">
         <p>Insira os valores acima para calcular.</p>
     </div>
@@ -269,7 +269,7 @@
 
     <label for="pcAlvo">Meta de PC Total Desejado:</label>
     <input type="number" id="pcAlvo" value="" min="60" oninput="calcularTudo()">
-    
+	
     <div id="resultadoPC" class="resultado">
         <p>Insira o valor do PC desejado para calcular.</p>
     </div>
@@ -335,19 +335,19 @@
 
         const days = Math.floor(totalSeconds / 86400);
         totalSeconds %= 86400;
-        
+		
         const hours = Math.floor(totalSeconds / 3600);
         totalSeconds %= 3600;
-        
+		
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
-        
+		
         let output = '';
         if (days > 0) output += `${days}d `;
         if (hours > 0) output += `${hours}h `;
         if (minutes > 0) output += `${minutes}m `;
         if (seconds > 0 || output === '') output += `${seconds}s`;
-        
+		
         return output.trim();
     }
 
@@ -366,7 +366,7 @@
         const selectedTier = document.getElementById('tierSelect').value;
         return TIER_CONFIG[selectedTier];
     }
-    
+	
     function getPCPerAnt() {
         const tierConfig = getCurrentTierConfig();
         return tierConfig ? tierConfig.PC : 0;
@@ -392,21 +392,21 @@
 
         return multiplicadorTempo;
     }
-    
+	
     function obterTempoTotalEmMinutos(useAdjustedTime) {
         // CORREÇÃO: Usar parseFloat para ler o valor mesmo que o input esteja vazio e retorne ''
         const dias = parseFloat(document.getElementById('tempoDias').value) || 0;
         const horas = parseFloat(document.getElementById('tempoHoras').value) || 0;
         const minutos = parseFloat(document.getElementById('tempoMinutos').value) || 0;
         const segundos = parseFloat(document.getElementById('tempoSegundos').value) || 0;
-        
+		
         let tempoBaseMinutos = convertDHMS_to_Minutes(dias, horas, minutos, segundos);
-        
+		
         if (useAdjustedTime) {
             const isTreinamentoActive = document.getElementById('bonusTreinamento').checked;
             const isRecuperacaoActive = document.getElementById('bonusRecuperacao').checked;
             const descontoMochila = parseFloat(document.getElementById('bonusMochila').value) || 0;
-            
+			
             tempoBaseMinutos *= getTempoMultiplicador(isTreinamentoActive, isRecuperacaoActive, descontoMochila);
         }
 
@@ -417,21 +417,22 @@
     function getTrainingRate() {
         const Q1 = parseFloat(document.getElementById('quantidadeFormiga').value) || 0; // Use parseFloat e default 0
         if (Q1 <= 0) return 0;
-        
+		
         const T_minutos_ajustado = obterTempoTotalEmMinutos(true);
-        
+		
         return Q1 / T_minutos_ajustado;
     }
 
     // --- FUNÇÃO DE ENGENHARIA REVERSA (SEÇÃO 0) ---
-    
+	
     function reverterTempo() {
         const tier = document.getElementById('tierSelect').value;
         const resultadoDiv = document.getElementById('resultadoReversa');
-        
+		
         if (!tier) {
             resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
             limparTransferencia();
+            saveToLocalStorage(); // Salva estado
             return;
         }
 
@@ -446,6 +447,7 @@
         if (Q <= 0 || (diasFinal + horasFinal + minutosFinal + segundosFinal) <= 0) {
             resultadoDiv.innerHTML = `<p style='color: red;'>Insira uma quantidade de formigas e um tempo final válidos (${tier}).</p>`;
             limparTransferencia();
+            saveToLocalStorage(); // Salva estado
             return;
         }
 
@@ -456,10 +458,11 @@
         const descontoMochila = parseFloat(document.getElementById('bonusMochila').value) || 0;
 
         const multiplicadorTotal = getTempoMultiplicador(isTreinamentoActive, isRecuperacaoActive, descontoMochila);
-        
+		
         if (multiplicadorTotal === 0) {
             resultadoDiv.innerHTML = `<p style='color: red;'>Erro: Multiplicador de tempo é zero. Verifique as configurações de bônus.</p>`;
             limparTransferencia();
+            saveToLocalStorage(); // Salva estado
             return;
         }
 
@@ -478,14 +481,15 @@
             <p>Quantidade de Formigas: **${formatar(Q)}**</p>
             <p style="color: blue;">*Tempo Base de ${tier} transferido automaticamente para a Seção 1.*</p>
         `;
-        
+		
         // CORREÇÃO: Chama calcularTudo() para forçar o recálculo das Seções 1 e 2.
         calcularTudo();
+        saveToLocalStorage(); // Salva estado
     }
-    
+	
     function limparTransferencia() {
         // Limpa apenas a quantidade e o Tempo Base da Seção 1, mas não o Tempo Final da Seção 0
-        document.getElementById('quantidadeFormiga').value = 0; // CORRIGIDO: de '' para 0
+        document.getElementById('quantidadeFormiga').value = ''; // Mantido como string vazia
         document.getElementById('tempoDias').value = 0;
         document.getElementById('tempoHoras').value = 0;
         document.getElementById('tempoMinutos').value = 0;
@@ -497,10 +501,10 @@
 
         const days = Math.floor(totalSeconds / 86400);
         totalSeconds %= 86400;
-        
+		
         const hours = Math.floor(totalSeconds / 3600);
         totalSeconds %= 3600;
-        
+		
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
 
@@ -516,7 +520,7 @@
     function updateTierDisplay() {
         const tier = document.getElementById('tierSelect').value;
         const tierConfig = TIER_CONFIG[tier];
-        
+		
         if (!tierConfig) {
             document.getElementById('pcBaseDisplay').innerHTML = "Selecione um Tier para ver o PC base.";
             document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO`;
@@ -526,7 +530,7 @@
             document.getElementById('quantidadeTierDisplay').textContent = 'TIER';
             return;
         }
-        
+		
         let pcBase = tierConfig.PC;
         let pcDisplayText;
 
@@ -541,7 +545,7 @@
 
         document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - ${tier}) - AUTOMÁTICO`;
         document.getElementById('tituloSecao1').innerHTML = `➡️ 1. Calcule a Taxa de Produção e o Tempo Ajustado (${tier})`;
-        
+		
         document.getElementById('reversaTierDisplay1').textContent = tier;
         document.getElementById('reversaTierDisplay2').textContent = tier;
         document.getElementById('quantidadeTierDisplay').textContent = tier;
@@ -552,7 +556,7 @@
         const Q = parseFloat(document.getElementById('quantidadeFormiga').value) || 0; // Garante que Q é um número
         const pcPorFormiga = getPCPerAnt();
         const resultadoDiv = document.getElementById('resultadoQuantidade');
-        
+		
         if (!tier) {
             resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
             return;
@@ -565,13 +569,13 @@
             parseFloat(document.getElementById('tempoMinutos').value) || 0,
             parseFloat(document.getElementById('tempoSegundos').value) || 0
         );
-        
+		
         // Verifica se a quantidade E o tempo base foram inseridos
         if (Q <= 0 || tempoBaseMinutos <= 0) {
             resultadoDiv.innerHTML = "<p style='color: red;'>Insira a quantidade de formigas e o tempo base.</p>";
             return;
         }
-        
+		
         // O restante do cálculo usa o tempo ajustado (com bônus)
         const T_minutos_ajustado = obterTempoTotalEmMinutos(true);
         const pcTotal = Q * pcPorFormiga;
@@ -590,7 +594,7 @@
         const pcPorFormiga = getPCPerAnt();
         const custos = getCostsPerAnt();
         const resultadoDiv = document.getElementById('resultadoPC');
-        
+		
         if (!tier) {
             resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
             return;
@@ -600,12 +604,12 @@
             resultadoDiv.innerHTML = "<p style='color: red;'>Por favor, insira um PC Alvo válido e positivo.</p>";
             return;
         }
-        
+		
         if (pcPorFormiga <= 0) {
             resultadoDiv.innerHTML = `<p style='color: red;'>Erro: PC por formiga inválido. Verifique o Tier selecionado.</p>`;
             return;
         }
-        
+		
         if (rate_ants_per_minute_final <= 0) {
             resultadoDiv.innerHTML = `<p style='color: red;'>Erro: Taxa de produção inválida. Complete a Seção 1 (Quantidade e Tempo Base).</p>`;
             return;
@@ -623,7 +627,7 @@
         const consumoFolha = formigasInteiras * (custos.folha || 0);
         const consumoAgua = formigasInteiras * (custos.agua || 0);
         const consumoFungo = formigasInteiras * (custos.fungo || 0);
-        
+		
         resultadoDiv.innerHTML = `
             <h3>Resultados para Meta de PC de ${formatar(pcAlvo)}:</h3>
             <p class="pc">🐜 **Formigas Necessárias:** ${formatar(formigasInteiras)} Formigas</p>
@@ -646,31 +650,84 @@
         // Isso permite que a Seção 1 seja preenchida manualmente.
         calcularPorQuantidade();
         calcularPorPC();
+        saveToLocalStorage(); // Salva estado
+    }
+
+    // =======================================================
+    // --- CÓDIGO PARA ARMAZENAMENTO LOCAL (localStorage) ---
+    // =======================================================
+
+    // Lista de IDs dos campos que queremos salvar/carregar
+    const INPUT_IDS_TO_SAVE = [
+        'tierSelect',
+        'quantidadeFormigaReversa',
+        'quantidadeFormiga',
+        'pcAlvo',
+        'tempoDiasFinal',
+        'tempoHorasFinal',
+        'tempoMinutosFinal',
+        'tempoSegundosFinal',
+        'tempoDias',
+        'tempoHoras',
+        'tempoMinutos',
+        'tempoSegundos',
+        'bonusTreinamento',
+        'bonusRecuperacao',
+        'bonusMochila'
+    ];
+
+    function saveToLocalStorage() {
+        INPUT_IDS_TO_SAVE.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                if (element.type === 'checkbox') {
+                    localStorage.setItem(id, element.checked);
+                } else {
+                    localStorage.setItem(id, element.value);
+                }
+            }
+        });
+    }
+
+    function loadFromLocalStorage() {
+        INPUT_IDS_TO_SAVE.forEach(id => {
+            const element = document.getElementById(id);
+            const savedValue = localStorage.getItem(id);
+
+            if (element && savedValue !== null) {
+                if (element.type === 'checkbox') {
+                    // Checkbox armazena 'true' ou 'false' como string
+                    element.checked = (savedValue === 'true');
+                } else {
+                    element.value = savedValue;
+                }
+            }
+        });
     }
 
     // Função inicial que garante o estado limpo e inicial da calculadora
     window.onload = function() {
-        // CORRIGIDO: Garante que os campos de quantidade/PC inicial estejam vazios, e os de tempo estejam zerados.
-        document.getElementById('quantidadeFormigaReversa').value = '';
-        document.getElementById('quantidadeFormiga').value = '';
-        document.getElementById('pcAlvo').value = '';
+        // 1. Tenta carregar os dados do armazenamento local
+        loadFromLocalStorage();
 
-        document.getElementById('tempoDias').value = 0;
-        document.getElementById('tempoHoras').value = 0;
-        document.getElementById('tempoMinutos').value = 0;
-        document.getElementById('tempoSegundos').value = 0;
-        document.getElementById('tempoDiasFinal').value = 0;
-        document.getElementById('tempoHorasFinal').value = 0;
-        document.getElementById('tempoMinutosFinal').value = 0;
-        document.getElementById('tempoSegundosFinal').value = 0;
-        
-        // Garante que os resultados iniciais estejam limpos
+        // 2. Garante que os resultados iniciais estejam limpos/preenchidos
         document.getElementById('resultadoReversa').innerHTML = `<p>coloque o tempo que aparece com o pós guerra e tudo em treinamento</p>`;
         document.getElementById('resultadoQuantidade').innerHTML = `<p>Insira os valores acima para calcular.</p>`;
         document.getElementById('resultadoPC').innerHTML = `<p>Insira o valor do PC desejado para calcular.</p>`;
         
-        // Inicializa o display do Tier
-        updateTierDisplay();
+        // 3. Inicializa o display do Tier e recalcula TUDO com os dados carregados
+        // Se a seção reversa tinha dados salvos, executa a reversa, que chama o calcularTudo()
+        const qtdReversa = localStorage.getItem('quantidadeFormigaReversa');
+        const diasFinal = parseFloat(localStorage.getItem('tempoDiasFinal')) || 0;
+        const horasFinal = parseFloat(localStorage.getItem('tempoHorasFinal')) || 0;
+        const minutosFinal = parseFloat(localStorage.getItem('tempoMinutosFinal')) || 0;
+        const segundosFinal = parseFloat(localStorage.getItem('tempoSegundosFinal')) || 0;
+
+        if (qtdReversa && parseFloat(qtdReversa) > 0 && (diasFinal + horasFinal + minutosFinal + segundosFinal) > 0) {
+            reverterTempo(); // Esta função já chama calcularTudo() e saveToLocalStorage()
+        } else {
+            calcularTudo(); // Chama o cálculo normal para carregar TIER, display e outros campos
+        }
     }
 </script>
 
