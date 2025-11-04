@@ -180,7 +180,7 @@
     <hr>
 	
     <h2 id="tituloSecao0">↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO</h2>
-    <p>Insira o tempo final do jogo. O **Tempo Base** calculado será **automaticamente transferido** para a Seção 1 abaixo.</p>
+    <p>Insira o tempo final do jogo. O Tempo Base calculado será automaticamente transferido para a Seção 1 abaixo.</p>
 	
     <label for="quantidadeFormigaReversa">Quantidade de Formigas Treinadas (<span id="reversaTierDisplay1">TIER</span>):</label>
     <input type="number" id="quantidadeFormigaReversa" value="" min="1" oninput="reverterTempo()">
@@ -212,19 +212,19 @@
     <hr>
 
     <h2 id="tituloSecao1">➡️ 1. Calcule a Taxa de Produção e o Tempo Ajustado (TIER)</h2>
-    <p>Estes campos são **preenchidos automaticamente** pela Seção 0, mas podem ser **modificados manualmente**.</p>
+    <p>Estes campos são preenchidos automaticamente pela Seção 0, mas podem ser modificados manualmente.</p>
 
     <div class="bonus-section">
         <h3>Bônus Ativos (Para Cálculo do Tempo Ajustado)</h3>
 		
         <label>
             <input type="checkbox" id="bonusTreinamento" onchange="calcularTudo()">
-            **Tudo em Treinamento**<span class="hidden-calib"><small class="tempo">(Redução Real Recalibrada: $\mathbf{\approx 3.60\%}$)</small></span>
+            Tudo em Treinamento<span class="hidden-calib"><small class="tempo">(Redução Real Recalibrada: $\mathbf{\approx 3.60\%}$)</small></span>
         </label>
 		
         <label>
             <input type="checkbox" id="bonusRecuperacao" onchange="calcularTudo()">
-            **Recuperação Pós-Guerra**<span class="hidden-calib"><small class="tempo">(Redução Real Calibrada: $\mathbf{\approx 37.31\%}$)</small></span>
+            Recuperação Pós-Guerra<span class="hidden-calib"><small class="tempo">(Redução Real Calibrada: $\mathbf{\approx 37.31\%}$)</small></span>
         </label>
 
         <label for="bonusMochila">Bônus da Mochila (Redução de Tempo):</label>
@@ -239,7 +239,7 @@
     <label for="quantidadeFormiga">Quantidade de Formigas Treinadas (<span id="quantidadeTierDisplay">TIER</span>):</label>
     <input type="number" id="quantidadeFormiga" value="" min="1" oninput="calcularTudo()">
 
-    <label>Tempo Gasto para o Treinamento dessa quantidade (**Tempo BASE**, sem bônus):</label>
+    <label>Tempo Gasto para o Treinamento dessa quantidade (Tempo BASE, sem bônus):</label>
     <div class="time-inputs">
         <div>
             <input type="number" id="tempoDias" value="0" min="0" oninput="calcularTudo()">
@@ -265,7 +265,7 @@
 
     <hr>
 
-    <h2>🎯 2. Calcular Formigas e Tempo para Meta de PC</h2>
+    <h2>🎯 2. Calcular Meta de PC</h2>
 
     <label for="pcAlvo">Meta de PC Total Desejado:</label>
     <input type="number" id="pcAlvo" value="" min="60" oninput="calcularTudo()">
@@ -537,9 +537,9 @@
         const isRecuperacaoActive = document.getElementById('bonusRecuperacao').checked;
 
         if (tier === 'T11' && isRecuperacaoActive) {
-            pcDisplayText = `PC Base por Formiga ${tier}: **${pcBase} PC** (Recuperação Pós-Guerra **NÃO** afeta o PC da T11).`;
+            pcDisplayText = `PC Base por Formiga ${tier}: ${pcBase} PC (Recuperação Pós-Guerra NÃO afeta o PC da T11).`;
         } else {
-            pcDisplayText = `PC Base por Formiga ${tier}: **${pcBase} PC**.`;
+            pcDisplayText = `PC Base por Formiga ${tier}: ${pcBase} PC.`;
         }
         document.getElementById('pcBaseDisplay').innerHTML = pcDisplayText;
 
@@ -582,8 +582,8 @@
 
         resultadoDiv.innerHTML = `
             <h3>Resultados de Treinamento (${formatar(Q)} Formigas ${tier}):</h3>
-            <p class="pc">⚔️ **PC Total Alcançado:** ${formatar(pcTotal)} PC</p>
-            <p class="tempo">⏳ **Tempo Total de Treinamento (AJUSTADO):** ${convertMinutesToDHMS(T_minutos_ajustado)}</p>
+            <p class="pc">⚔️ PC Total Alcançado: ${formatar(pcTotal)} PC</p>
+            <p class="tempo">⏳ Tempo Total de Treinamento (AJUSTADO): ${convertMinutesToDHMS(T_minutos_ajustado)}</p>
         `;
     }
 
@@ -596,7 +596,7 @@
         const resultadoDiv = document.getElementById('resultadoPC');
 		
         if (!tier) {
-            resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ **Selecione um Tipo de Formiga (Tier) primeiro.**</p>`;
+            resultadoDiv.innerHTML = `<p style='color: red;'>⚠️ Selecione um Tipo de Formiga (Tier) primeiro.</p>`;
             return;
         }
 
@@ -630,10 +630,10 @@
 		
         resultadoDiv.innerHTML = `
             <h3>Resultados para Meta de PC de ${formatar(pcAlvo)}:</h3>
-            <p class="pc">🐜 **Formigas Necessárias:** ${formatar(formigasInteiras)} Formigas</p>
-            <p>*(PC Real alcançado: ${formatar(pcReal)} PC)*</p>
-            <p class="tempo">⏳ **Tempo Total Necessário:** ${tempoTotalDHMS}</p>
-            <p class="consumo">💰 **Consumo Total de Recursos:**</p>
+            <p class="pc">🐜 Formigas Necessárias: ${formatar(formigasInteiras)} Formigas</p>
+            <p>PC Real alcançado: ${formatar(pcReal)} PC</p>
+            <p class="tempo">⏳ Tempo Total Necessário: ${tempoTotalDHMS}</p>
+            <p class="consumo">💰 Consumo Total de Recursos:</p>
             <ul>
                 <li>Comida: ${formatar(consumoComida)}</li>
                 <li>Folha: ${formatar(consumoFolha)}</li>
