@@ -180,7 +180,7 @@
     <hr>
 	
     <h2 id="tituloSecao0">↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO</h2>
-    <p>Insira o tempo final do jogo. O Tempo Base calculado será automaticamente transferido para a Seção 1 abaixo.</p>
+    <p>Insira o tempo com bonus pós guerra e tudo em treinamento e a quantidade de formiga que consegue fazer por vez. O Tempo Base calculado será automaticamente transferido para a Seção 1 abaixo.</p>
 	
     <label for="quantidadeFormigaReversa">Quantidade de Formigas Treinadas (<span id="reversaTierDisplay1">TIER</span>):</label>
     <input type="number" id="quantidadeFormigaReversa" value="" min="1" oninput="reverterTempo()">
@@ -445,7 +445,7 @@
 
         // 2. Validação de Inputs da Reversa
         if (Q <= 0 || (diasFinal + horasFinal + minutosFinal + segundosFinal) <= 0) {
-            resultadoDiv.innerHTML = `<p style='color: red;'>Insira uma quantidade de formigas e um tempo final válidos (${tier}).</p>`;
+            resultadoDiv.innerHTML = `<p style='color: red;'>Essa função pega o tempo com o pós guerra e tudo em treinamento(${tier}).</p>`;
             limparTransferencia();
             saveToLocalStorage(); // Salva estado
             return;
@@ -523,8 +523,8 @@
 		
         if (!tierConfig) {
             document.getElementById('pcBaseDisplay').innerHTML = "Selecione um Tier para ver o PC base.";
-            document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - TIER) - AUTOMÁTICO`;
-            document.getElementById('tituloSecao1').innerHTML = `➡️ 1. Calcule a Taxa de Produção e o Tempo Ajustado (TIER)`;
+            document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo base - TIER) - AUTOMÁTICO`;
+            document.getElementById('tituloSecao1').innerHTML = `➡️ 1. Coloque a quantidade e o tempo que consegue fazer por vez (TIER)`;
             document.getElementById('reversaTierDisplay1').textContent = 'TIER';
             document.getElementById('reversaTierDisplay2').textContent = 'TIER';
             document.getElementById('quantidadeTierDisplay').textContent = 'TIER';
@@ -543,8 +543,8 @@
         }
         document.getElementById('pcBaseDisplay').innerHTML = pcDisplayText;
 
-        document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo FINAL do Jogo - ${tier}) - AUTOMÁTICO`;
-        document.getElementById('tituloSecao1').innerHTML = `➡️ 1. Calcule a Taxa de Produção e o Tempo Ajustado (${tier})`;
+        document.getElementById('tituloSecao0').innerHTML = `↩️ Engenharia Reversa (Calibrar com Tempo base - TIER) - AUTOMÁTICO`;
+        document.getElementById('tituloSecao1').innerHTML = `➡️ 1.Coloque a quantidade e o tempo que consegue fazer por vez e seleciona os bonus ativos (${tier})`;
 		
         document.getElementById('reversaTierDisplay1').textContent = tier;
         document.getElementById('reversaTierDisplay2').textContent = tier;
